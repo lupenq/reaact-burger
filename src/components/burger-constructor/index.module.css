@@ -11,25 +11,32 @@
   flex-direction: column;
   height: 660px;
   width: 100%;
-  overflow-y: scroll;
   gap: 16px;
-  justify-content: space-between;
 }
 
-.orderList::-webkit-scrollbar {
+.scrollableList > :global(.constructor-element) > :global(.constructor-element__row) > :global(.constructor-element__text) {
+  display: flex;
+  flex-grow: 1;
+}
+
+.scrollableList {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  gap: 16px;
+}
+
+.scrollableList::-webkit-scrollbar {
   width: 8px;
 }
 
-.orderList::-webkit-scrollbar-track {
+.scrollableList::-webkit-scrollbar-track {
     background: #2F2F37;
 }
-.orderList::-webkit-scrollbar-thumb {
+.scrollableList::-webkit-scrollbar-thumb {
     background: #8585AD;
 }
 
-.orderList > :global(.constructor-element) > :global(.constructor-element__row) > :global(.constructor-element__text) {
-  flex-grow: 1;
-}
 
 .orderInfo {
   composes: mt-10 from global;

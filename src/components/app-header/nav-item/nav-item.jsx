@@ -12,7 +12,7 @@ const NavItem = ({Icon, title, className}) => {
 }
 
 NavItem.propTypes = {
-	Icon: PropTypes.element.isRequired,
+	Icon: PropTypes.func.isRequired,
 	title: PropTypes.string.isRequired,
 	className: PropTypes.string
 }

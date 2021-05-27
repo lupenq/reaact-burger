@@ -7,18 +7,36 @@ function BurgerConstructor({data}) {
   return (
     <main className={styles.root}>
       <div className={styles.orderList}>
-        {
-          data.map((item, index) => {
-            return <ConstructorElement
-              type={(!index && 'top') || (index === data.length - 1 && 'bottom')}
-              isLocked={false}
-              text={item.name}
-              price={item.price}
-              thumbnail={item.image}
-              handleClose={() => console.log('tyt')}
-            />
-          })
-        }
+        <ConstructorElement
+            type='top'
+            isLocked={true}
+            text={data[0].name}
+            price={data[0].price}
+            thumbnail={data[0].image}
+            handleClose={() => console.log('tyt')}
+        />
+        <div className={styles.scrollableList}>
+          {
+            data.map(item => {
+              return <ConstructorElement
+                key={item._id}
+                isLocked={false}
+                text={item.name}
+                price={item.price}
+                thumbnail={item.image}
+                handleClose={() => console.log('tyt')}
+              />
+            })
+          }
+        </div>
+        <ConstructorElement
+            type='bottom'
+            isLocked={true}
+            text={data[0].name}
+            price={data[0].price}
+            thumbnail={data[0].image}
+            handleClose={() => console.log('tyt')}
+          />
       </div>
       <div className={styles.orderInfo}>
         <span className={styles.totalPrice}>

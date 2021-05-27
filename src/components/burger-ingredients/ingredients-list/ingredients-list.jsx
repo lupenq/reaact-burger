@@ -15,7 +15,7 @@ function IngredientsList({data}) {
 			<div className={styles.ingridients}>
 				{
 					buns.map(item => (
-						<IngredientsItem {...item}/>
+						<IngredientsItem key={item._id} {...item}/>
 					))
 				}
 			</div>
@@ -25,7 +25,7 @@ function IngredientsList({data}) {
 			<div className={styles.ingridients}>
 				{
 					sauces.map(item => (
-						<IngredientsItem {...item}/>
+						<IngredientsItem key={item._id} {...item}/>
 					))
 				}
 			</div>
@@ -35,7 +35,7 @@ function IngredientsList({data}) {
 			<div className={styles.ingridients}>
 				{
 					main.map(item => (
-						<IngredientsItem {...item}/>
+						<IngredientsItem key={item._id} {...item}/>
 					))
 				}
 			</div>
