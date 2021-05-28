@@ -1,0 +1,27 @@
+.root {
+	display: flex;
+	background: rgba(28, 28, 33, 1);
+	justify-content: center;
+}
+
+.content {
+	display: flex;
+	align-items: center;
+	width: 1240px;
+	composes: p-4 from global;
+}
+
+.logo {
+	display: flex;
+	flex-grow: 1;
+}
+
+.leftSide {
+	display: flex;
+	flex-grow: 1;
+}
+
+.rightSide {
+	flex-grow: 1;
+	display: flex;
+}

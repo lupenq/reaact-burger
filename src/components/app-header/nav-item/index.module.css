@@ -1,0 +1,9 @@
+.root {
+	display: flex;
+	align-items: center;
+	composes: p-5 ml-2 from global;
+}
+
+.title {
+	composes: text ml-2 from global;
+}

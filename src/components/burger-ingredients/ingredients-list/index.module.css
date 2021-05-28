@@ -1,0 +1,32 @@
+.root {
+	height: 756px;
+	width: 100%;
+	composes: pl-4 pr-4 from global;
+	overflow-y: scroll;
+}
+
+.root::-webkit-scrollbar {
+  width: 8px;
+}
+
+.root::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+.root::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.listSection {
+	composes: mt-10 from global;
+}
+
+.sectionTitle {
+	composes: text text_type_main-medium from global;
+}
+
+.ingridients {
+	composes: mt-6 from global;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+}

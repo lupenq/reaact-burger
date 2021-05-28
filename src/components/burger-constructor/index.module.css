@@ -1,0 +1,54 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 600px;
+  composes: p-4 from global;
+}
+
+.orderList {
+  display: flex;
+  flex-direction: column;
+  height: 660px;
+  width: 100%;
+  gap: 16px;
+}
+
+.scrollableList > :global(.constructor-element) > :global(.constructor-element__row) > :global(.constructor-element__text) {
+  display: flex;
+  flex-grow: 1;
+}
+
+.scrollableList {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  gap: 16px;
+}
+
+.scrollableList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollableList::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+.scrollableList::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+
+.orderInfo {
+  composes: mt-10 from global;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.totalPrice {
+  composes: mr-2 text text_type_digits-medium from global;
+}
+
+.submitOrder {
+  composes: ml-10 from global;
+}
