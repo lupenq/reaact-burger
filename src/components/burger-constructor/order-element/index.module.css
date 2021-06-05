@@ -1,0 +1,11 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  composes: mr-2 from global;
+}
+
+.root > :global(.constructor-element) > :global(.constructor-element__row) > :global(.constructor-element__text) {
+  display: flex;
+  flex-grow: 1;
+}

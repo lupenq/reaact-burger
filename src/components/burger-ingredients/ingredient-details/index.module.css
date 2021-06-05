@@ -1,0 +1,39 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 480px;
+  justify-content: center;
+  composes: pt-4 from global;
+}
+
+.ingridientImage {
+  width: 480px;
+  height: 240px;
+}
+
+.ingridientTitle {
+  composes: mt-4 text text_type_main-medium from global;
+  text-align: center;
+}
+
+.nutritionalsTable {
+  composes: mt-8 from global;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.nutritionalCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nutritionalTitle {
+  composes: text text_type_main-default text_color_inactive from global;
+}
+
+.nutritionalValue {
+  composes: mt-1 text text_type_digits-default text_color_inactive from global;
+}

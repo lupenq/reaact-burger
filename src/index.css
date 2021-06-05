@@ -12,7 +12,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#modal {
+  overflow: hidden;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.constructor-element {
+  width: 100%;
 }
