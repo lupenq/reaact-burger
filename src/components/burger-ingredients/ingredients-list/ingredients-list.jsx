@@ -1,12 +1,12 @@
-import React from 'react'
+import { useMemo } from 'react'
 import styles from './index.module.css'
 import PropTypes from 'prop-types'
 import IngredientsItem from './ingredients-item/ingredients-item'
 
 function IngredientsList ({ data }) {
-  const buns = data.filter(item => item.type === 'bun')
-  const main = data.filter(item => item.type === 'main')
-  const sauces = data.filter(item => item.type === 'sauce')
+  const buns = useMemo(() => data.filter(item => item.type === 'bun'), [data])
+  const main = useMemo(() => data.filter(item => item.type === 'main'), [data])
+  const sauces = useMemo(() => data.filter(item => item.type === 'sauce'), [data])
 
   return (
   <div className={styles.root}>

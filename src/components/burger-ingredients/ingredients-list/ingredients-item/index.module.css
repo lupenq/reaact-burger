@@ -9,6 +9,8 @@
 
 .root:hover {
   background-color: rgba(255, 255, 255, .1);
+  transition: background-color .1s ease;
+  transition: box-shadow .1s ease;
   border-radius: 20px;
   box-shadow: 0 0 30px rgba(255, 255, 255, .2);
 }

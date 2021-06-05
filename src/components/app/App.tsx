@@ -13,19 +13,18 @@ function App () {
 
   useEffect(() => {
     fetch(API_URL)
-      .then(res => res.json())
+      .then(res => res.ok ? res.json() : Promise.reject(res))
       .then(({ data }) => {
         setIngridients(data)
-        setIsLoading(false)
       })
       .catch(err => {
         setErrorMessage(err.message)
-        setIsLoading(false)
       })
+      .finally(() => setIsLoading(false))
   }, [])
 
   return (
-    <div>
+    <>
       <AppHeader />
       <div className={styles.mainContent}>
         {
@@ -36,7 +35,7 @@ function App () {
               : <Main data={ingridients} />
         }
       </div>
-    </div>
+    </>
   )
 }
 

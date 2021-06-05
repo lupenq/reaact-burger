@@ -1,6 +1,7 @@
 .root {
 	display: flex;
 	align-items: center;
+	justify-content: flex-end;
 	composes: p-5 ml-2 from global;
 }
 
