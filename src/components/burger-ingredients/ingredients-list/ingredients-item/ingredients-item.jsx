@@ -1,22 +1,52 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import styles from './index.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../../../modal/modal'
 import IngredientDetails from '../../ingredient-details/ingredient-details'
+import { ingridientModalAdd } from '../../../../services/slices/ingridientModal'
+import { addIngridient } from '../../../../services/slices/burgerConstructor'
+import { useDrag } from 'react-dnd'
 
 function IngredientsItem ({ ingridient }) {
   const [modalVisible, setModalVisible] = useState(false)
+  const dispatch = useDispatch()
+
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: 'ingridient',
+    item: { ingridient },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult()
+      if (item && dropResult) {
+        dispatch(addIngridient(item.ingridient))
+      }
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      handlerId: monitor.getHandlerId()
+    })
+  }))
+
+  const style = {
+    opacity: isDragging ? 0.4 : 1,
+    cursor: isDragging ? 'grabbing' : 'grab'
+  }
+
+  const handleOpenModal = () => {
+    dispatch(ingridientModalAdd(ingridient))
+    setModalVisible(true)
+  }
 
   return (
     <>
       {
         modalVisible &&
         <Modal handleClose={() => setModalVisible(false)} title={'Детали ингридиента'}>
-          <IngredientDetails {...ingridient}/>
+          <IngredientDetails />
         </Modal>
       }
-      <div className={styles.root} onClick={() => setModalVisible(true)}>
+      <div ref={drag} data-testid={`box-${ingridient}`} className={styles.root} onClick={handleOpenModal} style={style}>
         <img src={ingridient.image} alt="" className={styles.image} />
         <div className={styles.currencyBlock}>
           <span className={styles.price}>{ingridient.price}</span>

@@ -1,43 +1,77 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import styles from './index.module.css'
 import Modal from '../modal/modal'
 import OrderDetails from './order-details/order-details'
 import OrderElement from './order-element/order-element'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { createOrder } from '../../services/slices/order'
+import { changeIndexes } from '../../services/slices/burgerConstructor'
+import { useDrop } from 'react-dnd'
 
-function BurgerConstructor ({ data }) {
+function BurgerConstructor () {
+  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+    accept: 'ingridient',
+    drop: () => ({ name: 'Dustbin' }),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop()
+    })
+  }))
+
+  const isActive = canDrop && isOver
+  let backgroundColor = 'transparent'
+  if (isActive) {
+    backgroundColor = 'darkgreen'
+  } else if (canDrop) {
+    backgroundColor = 'darkkhaki'
+  }
+
   const [modalVisible, setModalVisible] = useState(false)
+  const { ingridients, bun } = useSelector(store => store.burgerConstructor)
+  const dispatch = useDispatch()
 
   const totalPrice = useMemo(() => {
-    return data.reduce((acc, value) => acc + value.price, 0)
-  }, [data])
+    return ingridients.length && ingridients.reduce((acc, value) => acc + value.price, 0)
+  }, [ingridients])
+
+  const handleCheckoutButton = () => {
+    dispatch(createOrder(ingridients))
+    setModalVisible(true)
+  }
+
+  const moveIngridient = useCallback((dragIndex, hoverIndex) => {
+    dispatch(changeIndexes({ dragIndex, hoverIndex }))
+  }, [dispatch])
 
   return (
-    <main className={styles.root}>
+    <main className={styles.root} ref={drop} style={{ backgroundColor }}>
       <div className={styles.orderList}>
-        <OrderElement
-          ingridient={data[0]}
+        {bun && <OrderElement
+          ingridient={bun}
           type='top'
           isLocked={true}
-        />
+        />}
         <div className={styles.scrollableList}>
           {
-            data.map(item => {
+            !!ingridients.length && ingridients.map((item, index) => {
               return <OrderElement
                 key={item._id}
+                index={index}
                 ingridient={item}
                 isLocked={false}
                 handleClose={() => console.log('tyt')}
+                moveIngridient={moveIngridient}
               />
             })
           }
         </div>
-        <OrderElement
-          ingridient={data[0]}
+        {bun && <OrderElement
+          ingridient={bun}
           type='bottom'
           isLocked={true}
-        />
+        />}
       </div>
       <div className={styles.orderInfo}>
         <span className={styles.totalPrice}>
@@ -45,7 +79,7 @@ function BurgerConstructor ({ data }) {
         </span>
         <CurrencyIcon />
         <div className={styles.submitOrder} >
-          <Button type="primary" size="medium" onClick={() => setModalVisible(true)}>Оформить заказ</Button>
+          <Button type="primary" size="medium" onClick={handleCheckoutButton}>Оформить заказ</Button>
         </div>
       </div>
       {
