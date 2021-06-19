@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './index.module.css'
 
 function IngredientsTabs () {
-  const [activeTab, setActiveTab] = useState('buns')
+  const currentTab = useSelector(store => store.currentTab)
 
   return (
     <div className={styles.root}>
-      <Tab value='buns' active={activeTab === 'buns'} onClick={setActiveTab}>
+      <Tab value='buns' active={currentTab === 'buns'}>
         Булки
       </Tab>
-      <Tab value='sauces' active={activeTab === 'sauces'} onClick={setActiveTab}>
+      <Tab value='sauces' active={currentTab === 'sauces'}>
         Соусы
       </Tab>
-      <Tab value='toppings' active={activeTab === 'toppings'} onClick={setActiveTab}>
+      <Tab value='toppings' active={currentTab === 'toppings'}>
         Начинки
       </Tab>
     </div>

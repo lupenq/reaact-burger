@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import styles from './index.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -12,6 +12,12 @@ import { useDrag } from 'react-dnd'
 function IngredientsItem ({ ingridient }) {
   const [modalVisible, setModalVisible] = useState(false)
   const dispatch = useDispatch()
+
+  const count = useSelector(({ burgerConstructor }) => {
+    return ingridient.type === 'bun' && burgerConstructor.bun._id === ingridient._id
+      ? 1
+      : burgerConstructor.ingridients.filter(item => item._id === ingridient._id).length
+  })
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'ingridient',
@@ -47,6 +53,7 @@ function IngredientsItem ({ ingridient }) {
         </Modal>
       }
       <div ref={drag} data-testid={`box-${ingridient}`} className={styles.root} onClick={handleOpenModal} style={style}>
+        {!!count && <div className={styles.counter}>{count}</div>}
         <img src={ingridient.image} alt="" className={styles.image} />
         <div className={styles.currencyBlock}>
           <span className={styles.price}>{ingridient.price}</span>

@@ -6,7 +6,7 @@ import Modal from '../modal/modal'
 import OrderDetails from './order-details/order-details'
 import OrderElement from './order-element/order-element'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { createOrder } from '../../services/slices/order'
+import { postOrder } from '../../services/slices/order'
 import { changeIndexes } from '../../services/slices/burgerConstructor'
 import { useDrop } from 'react-dnd'
 
@@ -21,12 +21,6 @@ function BurgerConstructor () {
   }))
 
   const isActive = canDrop && isOver
-  let backgroundColor = 'transparent'
-  if (isActive) {
-    backgroundColor = 'darkgreen'
-  } else if (canDrop) {
-    backgroundColor = 'darkkhaki'
-  }
 
   const [modalVisible, setModalVisible] = useState(false)
   const { ingridients, bun } = useSelector(store => store.burgerConstructor)
@@ -37,7 +31,7 @@ function BurgerConstructor () {
   }, [ingridients])
 
   const handleCheckoutButton = () => {
-    dispatch(createOrder(ingridients))
+    dispatch(postOrder(ingridients))
     setModalVisible(true)
   }
 
@@ -46,39 +40,48 @@ function BurgerConstructor () {
   }, [dispatch])
 
   return (
-    <main className={styles.root} ref={drop} style={{ backgroundColor }}>
-      <div className={styles.orderList}>
-        {bun && <OrderElement
+    <main className={styles.root} >
+      <div className={styles.orderList} ref={drop}>
+        {canDrop && <div className={styles.dropHover}>
+          {!isActive && <span className={styles.dropText}>Переместите ингредиент в эту область</span>}
+          {isActive && <span className={styles.dropText}>Теперь можете отпустить его</span>}
+        </div>}
+        {bun.name || ingridients.length
+          ? <div className={styles.ingridientsWrapper}>
+        {bun.name && <OrderElement
           ingridient={bun}
           type='top'
           isLocked={true}
         />}
         <div className={styles.scrollableList}>
           {
-            !!ingridients.length && ingridients.map((item, index) => {
-              return <OrderElement
-                key={item._id}
-                index={index}
-                ingridient={item}
-                isLocked={false}
-                handleClose={() => console.log('tyt')}
-                moveIngridient={moveIngridient}
-              />
-            })
+            !!ingridients.length &&
+              ingridients.map((item, index) => {
+                return <OrderElement
+                  key={item.addedAt}
+                  index={index}
+                  ingridient={item}
+                  isLocked={false}
+                  moveIngridient={moveIngridient}
+                />
+              })
           }
         </div>
-        {bun && <OrderElement
+        {bun.name && <OrderElement
           ingridient={bun}
           type='bottom'
           isLocked={true}
         />}
+        </div>
+          : (!isActive && !canDrop) &&
+          <span className={styles.placeholderText}>Добавьте свой первый ингредиент или булку</span>}
       </div>
       <div className={styles.orderInfo}>
         <span className={styles.totalPrice}>
           {totalPrice}
         </span>
         <CurrencyIcon />
-        <div className={styles.submitOrder} >
+        <div className={`${styles.submitOrder} ${!bun.name && styles.disabled}`} >
           <Button type="primary" size="medium" onClick={handleCheckoutButton}>Оформить заказ</Button>
         </div>
       </div>

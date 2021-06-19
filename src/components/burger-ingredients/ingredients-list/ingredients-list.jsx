@@ -1,16 +1,36 @@
-import { useMemo } from 'react'
+import { useMemo, useRef, useEffect } from 'react'
+import { useInView } from 'react-intersection-observer'
 import styles from './index.module.css'
 import PropTypes from 'prop-types'
 import IngredientsItem from './ingredients-item/ingredients-item'
+import { useDispatch } from 'react-redux'
+import { setCurrentTab } from '../../../services/slices/currentTab'
 
 function IngredientsList ({ data }) {
+  const dispatch = useDispatch()
+
   const buns = useMemo(() => data.filter(item => item.type === 'bun'), [data])
   const main = useMemo(() => data.filter(item => item.type === 'main'), [data])
   const sauces = useMemo(() => data.filter(item => item.type === 'sauce'), [data])
 
+  const scrollableList = useRef()
+  const [bunsRef, inViewBuns] = useInView({ threshold: 0 })
+  const [toppingsRef, inViewToppings] = useInView({ threshold: 0 })
+  const [saucesRef, inViewSauces] = useInView({ threshold: 0 })
+
+  useEffect(() => {
+    if (inViewBuns) {
+      dispatch(setCurrentTab('buns'))
+    } else if (inViewSauces) {
+      dispatch(setCurrentTab('sauces'))
+    } else if (inViewToppings) {
+      dispatch(setCurrentTab('toppings'))
+    }
+  }, [dispatch, inViewBuns, inViewToppings, inViewSauces])
+
   return (
-  <div className={styles.root}>
-    <div className={styles.listSection}>
+  <div className={styles.root} ref={scrollableList}>
+    <div className={styles.listSection} ref={bunsRef}>
       <span className={styles.sectionTitle}>Булки</span>
       <div className={styles.ingridients}>
         {
@@ -20,8 +40,8 @@ function IngredientsList ({ data }) {
         }
       </div>
     </div>
-    <div className={styles.listSection}>
-      <span className={styles.sectionTitle}>Соусы</span>
+    <div className={styles.listSection} ref={saucesRef}>
+      <span className={styles.sectionTitle} >Соусы</span>
       <div className={styles.ingridients}>
         {
           sauces.map(item => (
@@ -30,7 +50,7 @@ function IngredientsList ({ data }) {
         }
       </div>
     </div>
-    <div className={styles.listSection}>
+    <div className={styles.listSection} ref={toppingsRef}>
       <span className={styles.sectionTitle}>Начинки</span>
       <div className={styles.ingridients}>
         {

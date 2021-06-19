@@ -60,7 +60,7 @@ function OrderElement ({ ingridient, type, isLocked, index, moveIngridient }) {
   return (
     <main
       ref={ref}
-      style={style}
+      style={isLocked ? {} : style}
       data-handler-id={handlerId}
       className={`${styles.root} ${isLocked ? 'pl-5' : ''}`}
     >
@@ -68,7 +68,7 @@ function OrderElement ({ ingridient, type, isLocked, index, moveIngridient }) {
       <ConstructorElement
         type={type}
         isLocked={isLocked}
-        text={ingridient.name}
+        text={`${ingridient.name} ${type === 'top' ? '(верх)' : type === 'bottom' ? '(низ)' : ''}`}
         price={ingridient.price}
         thumbnail={ingridient.image}
         handleClose={() => dispatch(removeIngridient(index))}

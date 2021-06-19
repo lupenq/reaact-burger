@@ -32,7 +32,6 @@
     background: #8585AD;
 }
 
-
 .orderInfo {
   composes: mt-10 from global;
   display: flex;
@@ -46,4 +45,38 @@
 
 .submitOrder {
   composes: ml-10 from global;
+}
+
+.submitOrder.disabled {
+  pointer-events: none;
+  opacity: .5;
+}
+
+.placeholderText {
+  margin: auto;
+  text-align: center;
+  composes: text text_type_main-medium from global;
+}
+
+.dropHover {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.7);
+  width: 568px;
+  height: 660px;
+  z-index: 100;
+  border: 10px dotted #fff;
+}
+
+.dropText {
+  composes: text text_type_main-medium from global;
+}
+
+.ingridientsWrapper {
+  height: 660px;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
 }
