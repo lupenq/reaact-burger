@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './components/app/app'
+import App from './components/app/1app'
 import store from './services/store'
 import { Provider } from 'react-redux'
 import { DndProvider } from 'react-dnd'
