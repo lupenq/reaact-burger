@@ -42,12 +42,12 @@ function BurgerConstructor () {
   return (
     <main className={styles.root} >
       <div className={styles.orderList} ref={drop}>
-        {canDrop && <div className={styles.dropHover}>
-          {!isActive && <span className={styles.dropText}>Переместите ингредиент в эту область</span>}
-          {isActive && <span className={styles.dropText}>Теперь можете отпустить его</span>}
-        </div>}
+        {canDrop && (<div className={styles.dropHover}>
+          {!isActive && (<span className={styles.dropText}>Переместите ингредиент в эту область</span>)}
+          {isActive && (<span className={styles.dropText}>Теперь можете отпустить его</span>)}
+        </div>)}
         {bun.name || ingridients.length
-          ? <div className={styles.ingridientsWrapper}>
+          ? (<div className={styles.ingridientsWrapper}>
         {bun.name && <OrderElement
           ingridient={bun}
           type='top'
@@ -57,24 +57,24 @@ function BurgerConstructor () {
           {
             !!ingridients.length &&
               ingridients.map((item, index) => {
-                return <OrderElement
+                return (<OrderElement
                   key={item.addedAt}
                   index={index}
                   ingridient={item}
                   isLocked={false}
                   moveIngridient={moveIngridient}
-                />
+                />)
               })
           }
         </div>
-        {bun.name && <OrderElement
+        {bun.name && (<OrderElement
           ingridient={bun}
           type='bottom'
           isLocked={true}
-        />}
-        </div>
+        />)}
+        </div>)
           : (!isActive && !canDrop) &&
-          <span className={styles.placeholderText}>Добавьте свой первый ингредиент или булку</span>}
+          (<span className={styles.placeholderText}>Добавьте свой первый ингредиент или булку</span>)}
       </div>
       <div className={styles.orderInfo}>
         <span className={styles.totalPrice}>
@@ -87,9 +87,9 @@ function BurgerConstructor () {
       </div>
       {
         modalVisible &&
-        <Modal handleClose={() => setModalVisible(false)}>
+        (<Modal handleClose={() => setModalVisible(false)}>
           <OrderDetails />
-        </Modal>
+        </Modal>)
       }
     </main>
   )

@@ -37,7 +37,7 @@ function IngredientsItem ({ ingridient, onClick }) {
   return (
     <>
       <div ref={drag} data-testid={`box-${ingridient}`} className={styles.root} onClick={onClick} style={style}>
-        {!!count && <div className={styles.counter}>{count}</div>}
+        {!!count && (<div className={styles.counter}>{count}</div>)}
         <img src={ingridient.image} alt="" className={styles.image} />
         <div className={styles.currencyBlock}>
           <span className={styles.price}>{ingridient.price}</span>

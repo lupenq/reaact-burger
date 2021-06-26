@@ -64,7 +64,7 @@ function OrderElement ({ ingridient, type, isLocked, index, moveIngridient }) {
       data-handler-id={handlerId}
       className={`${styles.root} ${isLocked ? 'pl-5' : ''}`}
     >
-      {!isLocked && <DragIcon />}
+      {!isLocked && (<DragIcon />)}
       <ConstructorElement
         type={type}
         isLocked={isLocked}
