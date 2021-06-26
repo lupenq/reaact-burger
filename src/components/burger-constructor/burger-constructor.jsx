@@ -27,8 +27,12 @@ function BurgerConstructor () {
   const dispatch = useDispatch()
 
   const totalPrice = useMemo(() => {
-    return ingridients.length && ingridients.reduce((acc, value) => acc + value.price, 0)
-  }, [ingridients])
+    if (ingridients.length || bun.price) {
+      return ingridients.reduce((acc, value) => acc + value.price, 0) + (bun.price || 0)
+    }
+
+    return 0
+  }, [bun.price, ingridients])
 
   const handleCheckoutButton = () => {
     dispatch(postOrder(ingridients))
