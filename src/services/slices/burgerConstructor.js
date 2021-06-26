@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const initialState = {
+  ingridients: [],
+  bun: {},
+  counts: {}
+}
+
 export const constructorSlice = createSlice({
   name: 'burgerConstructor',
-  initialState: {
-    ingridients: [],
-    bun: {},
-    counts: {}
-  },
+  initialState,
   reducers: {
     addIngridient: (state, action) => ({
       ...state,
@@ -18,6 +20,7 @@ export const constructorSlice = createSlice({
             ingridients: [...state.ingridients, { ...action.payload, addedAt: Date.now() }]
           })
     }),
+    clearConstructor: () => ({ ...initialState }),
     removeIngridient: (state, action) => ({
       ...state,
       ingridients: [...state.ingridients.filter((_, index) => index !== action.payload)]
@@ -33,6 +36,6 @@ export const constructorSlice = createSlice({
   }
 })
 
-export const { addIngridient, removeIngridient, changeIndexes } = constructorSlice.actions
+export const { addIngridient, removeIngridient, changeIndexes, clearConstructor } = constructorSlice.actions
 
 export default constructorSlice.reducer

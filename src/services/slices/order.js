@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { clearConstructor } from './burgerConstructor'
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -27,12 +28,10 @@ export const { orderSuccess, orderError, orderRequest } = orderSlice.actions
 const getIngridientsId = ({ burgerConstructor }) => {
   const { bun, ingridients } = burgerConstructor
   if (!bun._id) return
-  console.log([bun._id, bun._id, ...ingridients.map(item => item._id)])
   return [bun._id, bun._id, ...ingridients.map(item => item._id)]
 }
 
 export const postOrder = () => (dispatch, getState) => {
-  console.log()
   dispatch(orderRequest())
   fetch('https://norma.nomoreparties.space/api/orders', {
     method: 'POST',
@@ -43,8 +42,8 @@ export const postOrder = () => (dispatch, getState) => {
   })
     .then(res => res.ok ? res.json() : Promise.reject(res))
     .then((data) => {
-      console.log(data)
       dispatch(orderSuccess(data))
+      dispatch(clearConstructor())
     })
     .catch(() => {
       dispatch(orderError())

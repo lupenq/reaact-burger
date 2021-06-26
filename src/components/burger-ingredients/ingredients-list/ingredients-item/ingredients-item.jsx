@@ -1,16 +1,11 @@
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import styles from './index.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from '../../../modal/modal'
-import IngredientDetails from '../../ingredient-details/ingredient-details'
-import { ingridientModalAdd } from '../../../../services/slices/ingridientModal'
 import { addIngridient } from '../../../../services/slices/burgerConstructor'
 import { useDrag } from 'react-dnd'
 
-function IngredientsItem ({ ingridient }) {
-  const [modalVisible, setModalVisible] = useState(false)
+function IngredientsItem ({ ingridient, onClick }) {
   const dispatch = useDispatch()
 
   const count = useSelector(({ burgerConstructor }) => {
@@ -39,20 +34,9 @@ function IngredientsItem ({ ingridient }) {
     cursor: isDragging ? 'grabbing' : 'grab'
   }
 
-  const handleOpenModal = () => {
-    dispatch(ingridientModalAdd(ingridient))
-    setModalVisible(true)
-  }
-
   return (
     <>
-      {
-        modalVisible &&
-        <Modal handleClose={() => setModalVisible(false)} title={'Детали ингридиента'}>
-          <IngredientDetails />
-        </Modal>
-      }
-      <div ref={drag} data-testid={`box-${ingridient}`} className={styles.root} onClick={handleOpenModal} style={style}>
+      <div ref={drag} data-testid={`box-${ingridient}`} className={styles.root} onClick={onClick} style={style}>
         {!!count && <div className={styles.counter}>{count}</div>}
         <img src={ingridient.image} alt="" className={styles.image} />
         <div className={styles.currencyBlock}>
