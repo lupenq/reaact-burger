@@ -28,7 +28,7 @@ function BurgerConstructor () {
 
   const totalPrice = useMemo(() => {
     if (ingridients.length || bun.price) {
-      return ingridients.reduce((acc, value) => acc + value.price, 0) + (bun.price || 0)
+      return ingridients.reduce((acc, value) => acc + value.price, 0) + (bun.price * 2 || 0)
     }
 
     return 0
