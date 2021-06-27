@@ -1,58 +1,99 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import styles from './index.module.css'
 import Modal from '../modal/modal'
 import OrderDetails from './order-details/order-details'
 import OrderElement from './order-element/order-element'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { postOrder } from '../../services/slices/order'
+import { changeIndexes } from '../../services/slices/burgerConstructor'
+import { useDrop } from 'react-dnd'
 
-function BurgerConstructor ({ data }) {
+function BurgerConstructor () {
+  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+    accept: 'ingridient',
+    drop: () => ({ name: 'Dustbin' }),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop()
+    })
+  }))
+
+  const isActive = canDrop && isOver
+
   const [modalVisible, setModalVisible] = useState(false)
+  const { ingridients, bun } = useSelector(store => store.burgerConstructor)
+  const dispatch = useDispatch()
 
   const totalPrice = useMemo(() => {
-    return data.reduce((acc, value) => acc + value.price, 0)
-  }, [data])
+    if (ingridients.length || bun.price) {
+      return ingridients.reduce((acc, value) => acc + value.price, 0) + (bun.price * 2 || 0)
+    }
+
+    return 0
+  }, [bun.price, ingridients])
+
+  const handleCheckoutButton = () => {
+    dispatch(postOrder(ingridients))
+    setModalVisible(true)
+  }
+
+  const moveIngridient = useCallback((dragIndex, hoverIndex) => {
+    dispatch(changeIndexes({ dragIndex, hoverIndex }))
+  }, [dispatch])
 
   return (
-    <main className={styles.root}>
-      <div className={styles.orderList}>
-        <OrderElement
-          ingridient={data[0]}
+    <main className={styles.root} >
+      <div className={styles.orderList} ref={drop}>
+        {canDrop && (<div className={styles.dropHover}>
+          {!isActive && (<span className={styles.dropText}>Переместите ингредиент в эту область</span>)}
+          {isActive && (<span className={styles.dropText}>Теперь можете отпустить его</span>)}
+        </div>)}
+        {bun.name || ingridients.length
+          ? (<div className={styles.ingridientsWrapper}>
+        {bun.name && <OrderElement
+          ingridient={bun}
           type='top'
           isLocked={true}
-        />
+        />}
         <div className={styles.scrollableList}>
           {
-            data.map(item => {
-              return <OrderElement
-                key={item._id}
-                ingridient={item}
-                isLocked={false}
-                handleClose={() => console.log('tyt')}
-              />
-            })
+            !!ingridients.length &&
+              ingridients.map((item, index) => {
+                return (<OrderElement
+                  key={item.addedAt}
+                  index={index}
+                  ingridient={item}
+                  isLocked={false}
+                  moveIngridient={moveIngridient}
+                />)
+              })
           }
         </div>
-        <OrderElement
-          ingridient={data[0]}
+        {bun.name && (<OrderElement
+          ingridient={bun}
           type='bottom'
           isLocked={true}
-        />
+        />)}
+        </div>)
+          : (!isActive && !canDrop) &&
+          (<span className={styles.placeholderText}>Добавьте свой первый ингредиент или булку</span>)}
       </div>
       <div className={styles.orderInfo}>
         <span className={styles.totalPrice}>
           {totalPrice}
         </span>
         <CurrencyIcon />
-        <div className={styles.submitOrder} >
-          <Button type="primary" size="medium" onClick={() => setModalVisible(true)}>Оформить заказ</Button>
+        <div className={`${styles.submitOrder} ${!bun.name && styles.disabled}`} >
+          <Button type="primary" size="medium" onClick={handleCheckoutButton}>Оформить заказ</Button>
         </div>
       </div>
       {
         modalVisible &&
-        <Modal handleClose={() => setModalVisible(false)}>
+        (<Modal handleClose={() => setModalVisible(false)}>
           <OrderDetails />
-        </Modal>
+        </Modal>)
       }
     </main>
   )

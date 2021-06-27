@@ -1,10 +1,13 @@
+import { useSelector } from 'react-redux'
 import styles from './index.module.css'
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 function OrderDetails () {
+  const { order } = useSelector(store => store.order)
+
   return (
     <div className={styles.root}>
-      <span className={styles.orderNumber}>034536</span>
+      <span className={styles.orderNumber}>{order.number}</span>
       <span className={styles.numberDescription}>Идентификатора заказа</span>
       <div className={styles.checkedIcon}>
         <CheckMarkIcon />
