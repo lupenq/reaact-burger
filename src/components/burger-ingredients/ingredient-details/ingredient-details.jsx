@@ -8,8 +8,15 @@ function IngredientDetails () {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    return () => dispatch(ingridientModalRemove())
+    return () => {
+      dispatch(ingridientModalRemove())
+      window.history.pushState({}, null, '/')
+    }
   }, [dispatch])
+
+  useEffect(() => {
+    window.history.pushState({}, null, `/ingridients/${modalData._id}`)
+  }, [modalData._id])
 
   return (
     <div className={styles.root}>

@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  composes: mt-10 from global;
+  align-items: center;
+}
+
+.title {
+  composes: text text_type_main-medium from global;
+}
+
+
+.inputWrapper {
+  composes: mt-6 from global;
+}
+
+.button {
+  composes: mt-6 mb-20 from global;
+}
+
+.linkBlock {
+  display: flex;
+  composes: text text_type_main-default text_color_inactive from global;
+}
+
+.link {
+  composes: ml-1 text text_type_main-default from global;
+  color: rgba(76, 76, 255, 1);
+}

@@ -5,6 +5,7 @@ import ingridientModalReducer from '../services/slices/ingridientModal'
 import constructorSlice from './slices/burgerConstructor'
 import orderSlice from '../services/slices/order'
 import currentTabSlice from '../services/slices/currentTab'
+import userSlice from '../services/slices/user'
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
     ingridientModal: ingridientModalReducer,
     burgerConstructor: constructorSlice,
     order: orderSlice,
-    currentTab: currentTabSlice
+    currentTab: currentTabSlice,
+    user: userSlice
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(thunk),
   devTools: true,

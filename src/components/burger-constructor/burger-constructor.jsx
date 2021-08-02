@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import styles from './index.module.css'
+import { useHistory } from 'react-router-dom'
 import Modal from '../modal/modal'
 import OrderDetails from './order-details/order-details'
 import OrderElement from './order-element/order-element'
@@ -25,6 +26,8 @@ function BurgerConstructor () {
   const [modalVisible, setModalVisible] = useState(false)
   const { ingridients, bun } = useSelector(store => store.burgerConstructor)
   const dispatch = useDispatch()
+  const { isLoginned } = useSelector(store => store.user)
+  const history = useHistory()
 
   const totalPrice = useMemo(() => {
     if (ingridients.length || bun.price) {
@@ -35,7 +38,11 @@ function BurgerConstructor () {
   }, [bun.price, ingridients])
 
   const handleCheckoutButton = () => {
-    dispatch(postOrder(ingridients))
+    if (!isLoginned) {
+      return history.push('/login')
+    }
+
+    dispatch(postOrder())
     setModalVisible(true)
   }
 
