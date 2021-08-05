@@ -1,6 +1,6 @@
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState, useEffect } from 'react'
-import { Link, useHistory, Redirect } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { postLogin } from '../../services/slices/user'
 
@@ -13,24 +13,18 @@ export const LoginPage = () => {
 
   const dispatch = useDispatch()
   const { isLoginned } = useSelector(store => store.user)
-  const history = useHistory()
+  const location = useLocation()
 
   const onClick = () => {
     dispatch(postLogin({ email, password }))
   }
 
-  useEffect(() => {
-    if (isLoginned) {
-      history.push('/')
-    }
-  }, [history, isLoginned])
-
   if (isLoginned) {
+    const { from } = location.state || { from: { pathname: '/' } }
+
     return (
       <Redirect
-        to={{
-          pathname: '/'
-        }}
+        to={from}
       />
     )
   }
@@ -45,9 +39,6 @@ export const LoginPage = () => {
           onChange={e => setEmail(e.target.value)}
           value={email}
           name={'email'}
-          // error={false}
-          // ref={inputRef}
-          // errorText={'Ошибка'}
           size={'default'}
         />
       </div>
@@ -60,9 +51,6 @@ export const LoginPage = () => {
           name={'password'}
           onIconClick={() => setPasswordVisible(!passwordVisible)}
           icon={passwordVisible ? 'HideIcon' : 'ShowIcon'}
-          // error={false}
-          // ref={inputRef}
-          // errorText={'Ошибка'}
           size={'default'}
         />
       </div>

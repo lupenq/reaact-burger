@@ -21,6 +21,10 @@ export const userSlice = createSlice({
     loginRequest: false,
     loginRequestError: false,
 
+    logoutRequestSuccess: false,
+    logoutRequest: false,
+    logoutRequestError: false,
+
     loadUserRequest: false,
 
     isLoginned: false,
@@ -74,9 +78,23 @@ export const userSlice = createSlice({
       loginRequestError: false
     }),
 
+    logoutRequest: state => ({ ...state, logoutRequest: true }),
+    logoutError: state => ({ ...state, logoutRequest: false, logoutRequestError: true }),
+    logoutSuccess: (state, action) => ({
+      ...state,
+      isLoginned: false,
+      user: {},
+      accessToken: '',
+      refreshToken: '',
+      logoutRequestSuccess: true,
+      logoutRequest: false,
+      logoutRequestError: false
+    }),
+
     userLoadSuccess: (state, action) => ({
       ...state,
       isLoginned: true,
+      loadUserRequest: false,
       user: action.payload.user
     }),
     loadUserRequest: state => ({ ...state, loadUserRequest: true }),
@@ -97,6 +115,9 @@ export const {
   loginRequest,
   loginError,
   loginSuccess,
+  logoutRequest,
+  logoutError,
+  logoutSuccess,
   userLoadSuccess,
   loadUserRequest,
   loadUserSuccess
@@ -221,6 +242,26 @@ export const postLogin = data => dispatch => {
     })
     .catch(() => {
       dispatch(loginError())
+    })
+}
+
+export const postLogout = () => dispatch => {
+  dispatch(logoutRequest())
+  fetch('https://norma.nomoreparties.space/api/auth/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ token: localStorage.getItem('refreshToken') })
+  })
+    .then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(() => {
+      dispatch(logoutSuccess())
+      localStorage.removeItem('refreshToken')
+      setCookie('accessToken', '')
+    })
+    .catch(() => {
+      dispatch(logoutError())
     })
 }
 
