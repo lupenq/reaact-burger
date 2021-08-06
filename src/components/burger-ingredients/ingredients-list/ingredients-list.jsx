@@ -49,7 +49,7 @@ function IngredientsList ({ data }) {
               <Link className={styles.link} to={{
                 pathname: `/ingridients/${item._id}`,
                 state: { background: location }
-              }}><IngredientsItem key={item._id} ingridient={item} onClick={() => handleOpenModal(item)}/></Link>
+              }} key={item._id}><IngredientsItem ingridient={item} onClick={() => handleOpenModal(item)}/></Link>
               )
             })
           }
@@ -64,7 +64,7 @@ function IngredientsList ({ data }) {
               <Link className={styles.link} to={{
                 pathname: `/ingridients/${item._id}`,
                 state: { background: location }
-              }}><IngredientsItem key={item._id} ingridient={item} onClick={() => handleOpenModal(item)}/></Link>
+              }} key={item._id}><IngredientsItem ingridient={item} onClick={() => handleOpenModal(item)}/></Link>
               )
             })
           }
@@ -79,7 +79,7 @@ function IngredientsList ({ data }) {
               <Link className={styles.link} to={{
                 pathname: `/ingridients/${item._id}`,
                 state: { background: location }
-              }}><IngredientsItem key={item._id} ingridient={item} onClick={() => handleOpenModal(item)}/></Link>
+              }} key={item._id}><IngredientsItem ingridient={item} onClick={() => handleOpenModal(item)}/></Link>
               )
             })
           }

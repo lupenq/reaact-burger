@@ -26,7 +26,7 @@ export function Router () {
   const location = useLocation()
   const history = useHistory()
 
-  const background = location.state && location.state.background
+  const background = history.action === 'PUSH' && location.state && location.state.background
 
   const { loadUserRequest } = useSelector(({ user }) => user)
   return (
@@ -70,7 +70,7 @@ export function Router () {
               )
             }
       </div>
-      {background && <ProtectedRoute path="/ingridients/:id" children={<Modal handleClose={() => history.push('/')} title={'Детали ингридиента'}>
+      {background && <Route path="/ingridients/:id" children={<Modal handleClose={() => history.push('/')} title={'Детали ингридиента'}>
         <IngredientDetails />
       </Modal>} />}
       </>
