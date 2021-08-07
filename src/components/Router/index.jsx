@@ -57,9 +57,9 @@ export function Router () {
                     <ProtectedRoute path={'/profile'} exact>
                       <ProfilePage />
                     </ProtectedRoute>
-                    <ProtectedRoute path={'/ingridients/:id'} exact>
+                    <Route path={'/ingridients/:id'} exact>
                       <IngridientPage />
-                    </ProtectedRoute>
+                    </Route>
                     <Route path={'/'} exact>
                       <Main data={items} />
                     </Route>

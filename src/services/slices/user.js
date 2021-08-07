@@ -7,7 +7,6 @@ export const userSlice = createSlice({
     forgotRequest: false,
     forgotRequestError: false,
     forgotRequestSuccess: false,
-    isForgotPassword: false,
 
     resetRequest: false,
     resetRequestError: false,
@@ -37,7 +36,6 @@ export const userSlice = createSlice({
     forgotError: state => ({ ...state, forgotRequest: false, forgotRequestError: true }),
     forgotSuccess: (state, action) => ({
       ...state,
-      isForgotPassword: true,
       forgotRequestSuccess: action.payload.success,
       forgotRequest: false,
       forgotRequestError: false

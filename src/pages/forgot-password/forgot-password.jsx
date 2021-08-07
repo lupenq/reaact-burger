@@ -22,7 +22,7 @@ export const ForgotPasswordPage = () => {
 
   useEffect(() => {
     if (forgotRequestSuccess) {
-      history.push('/reset-password')
+      history.push('/reset-password', { isForgot: true })
     }
   }, [forgotRequestSuccess, history])
 

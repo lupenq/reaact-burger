@@ -1,5 +1,5 @@
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
@@ -11,7 +11,7 @@ export const ResetPasswordPage = () => {
   const [password, setPassword] = useState('')
   const [token, settoken] = useState('')
   const [passwordVisible, setPasswordVisible] = useState(false)
-  const { resetRequestSuccess, isForgotPassword } = useSelector(store => store.user)
+  const { resetRequestSuccess } = useSelector(store => store.user)
 
   const dispatch = useDispatch()
   const { isLoginned } = useSelector(store => store.user)
@@ -20,13 +20,15 @@ export const ResetPasswordPage = () => {
 
   const onClick = () => {
     dispatch(postResetPassword({ token, password }))
+  }
 
+  useEffect(() => {
     if (resetRequestSuccess) {
       history.push('/login')
     }
-  }
+  }, [history, resetRequestSuccess])
 
-  if (isLoginned || !isForgotPassword) {
+  if (isLoginned || !history.location?.state?.isForgot) {
     return (
       <Redirect
         to={{
