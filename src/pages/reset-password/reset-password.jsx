@@ -24,15 +24,20 @@ export const ResetPasswordPage = () => {
 
   useEffect(() => {
     if (resetRequestSuccess) {
-      history.push('/login')
+      history.push('/login', undefined)
     }
   }, [history, resetRequestSuccess])
+
+  useEffect(() => {
+    history.action === 'POP' && history.replace()
+  }, [])
 
   if (isLoginned || !history.location?.state?.isForgot) {
     return (
       <Redirect
         to={{
-          pathname: '/'
+          pathname: '/',
+          state: undefined
         }}
       />
     )

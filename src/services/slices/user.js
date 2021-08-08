@@ -33,6 +33,12 @@ export const userSlice = createSlice({
   },
   reducers: {
     forgotRequest: state => ({ ...state, forgotRequest: true }),
+    resetForgotRequest: state => ({
+      ...state,
+      forgotRequestSuccess: false,
+      forgotRequest: false,
+      forgotRequestError: false
+    }),
     forgotError: state => ({ ...state, forgotRequest: false, forgotRequestError: true }),
     forgotSuccess: (state, action) => ({
       ...state,
@@ -104,6 +110,7 @@ export const {
   forgotSuccess,
   forgotError,
   forgotRequest,
+  resetForgotRequest,
   resetRequest,
   resetError,
   resetSuccess,
@@ -203,7 +210,7 @@ export const postRegister = data => dispatch => {
     .then(res => res.ok ? res.json() : Promise.reject(res))
     .then(data => {
       if (data.accessToken) {
-        setCookie('accessToken', data.accessToken.split('Bearer ')[1])
+        setCookie('accessToken', data.accessToken.split('Bearer ')[1], { path: '/' })
       }
 
       if (data.refreshToken) {
@@ -229,7 +236,7 @@ export const postLogin = data => dispatch => {
     .then(res => res.ok ? res.json() : Promise.reject(res))
     .then(data => {
       if (data.accessToken) {
-        setCookie('accessToken', data.accessToken.split('Bearer ')[1])
+        setCookie('accessToken', data.accessToken.split('Bearer ')[1], { path: '/' })
       }
 
       if (data.refreshToken) {
@@ -256,7 +263,7 @@ export const postLogout = () => dispatch => {
     .then(() => {
       dispatch(logoutSuccess())
       localStorage.removeItem('refreshToken')
-      setCookie('accessToken', '')
+      setCookie('accessToken', '', { 'max-age': -1 })
     })
     .catch(() => {
       dispatch(logoutError())

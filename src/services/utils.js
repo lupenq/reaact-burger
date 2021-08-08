@@ -54,7 +54,7 @@ export const fetchWithRefresh = async (url, option) => {
     if (err.message === 'jwt expired' || err.message === 'jwt malformed') {
       const refreshData = await refreshToken()
       localStorage.setItem('refreshToken', refreshData.refreshToken)
-      setCookie('accessToken', refreshData.accessToken.split('Bearer ')[1])
+      setCookie('accessToken', refreshData.accessToken.split('Bearer ')[1], { path: '/' })
       option.headers.authorization = `Bearer ${refreshData.accessToken}`
       const res = await fetch(url, option)
       return await checkResponse(res)

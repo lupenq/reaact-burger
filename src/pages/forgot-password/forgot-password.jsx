@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
-import { postForgotPassword } from '../../services/slices/user'
+import { postForgotPassword, resetForgotRequest } from '../../services/slices/user'
 
 import styles from './index.module.css'
 
@@ -24,7 +24,11 @@ export const ForgotPasswordPage = () => {
     if (forgotRequestSuccess) {
       history.push('/reset-password', { isForgot: true })
     }
-  }, [forgotRequestSuccess, history])
+  }, [email, forgotRequestSuccess, history])
+
+  useEffect(() => {
+    return () => dispatch(resetForgotRequest())
+  }, [])
 
   if (isLoginned) {
     return (
