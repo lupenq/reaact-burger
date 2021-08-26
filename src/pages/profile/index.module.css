@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  gap: 60px;
+  composes: mt-20 from global;
+}
+
+.inputWrapper {
+  composes: mt-6 from global;
+}
+
+.buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  composes: mt-6 from global;
+}

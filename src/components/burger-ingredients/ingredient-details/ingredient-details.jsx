@@ -1,15 +1,22 @@
 import { useEffect } from 'react'
 import styles from './index.module.css'
 import { useSelector, useDispatch } from 'react-redux'
-import { ingridientModalRemove } from '../../../services/slices/ingridientModal'
+import { useParams } from 'react-router-dom'
+import { ingridientModalRemove, ingridientModalAdd } from '../../../services/slices/ingridientModal'
 
 function IngredientDetails () {
   const modalData = useSelector(({ ingridientModal }) => ingridientModal)
+  const ingridients = useSelector(({ ingridients }) => ingridients.items)
   const dispatch = useDispatch()
+  const { id } = useParams()
 
   useEffect(() => {
-    return () => dispatch(ingridientModalRemove())
-  }, [dispatch])
+    const ingridient = ingridients.filter(e => e._id === id)[0]
+    dispatch(ingridientModalAdd(ingridient))
+    return () => {
+      dispatch(ingridientModalRemove())
+    }
+  }, [dispatch, id, ingridients])
 
   return (
     <div className={styles.root}>

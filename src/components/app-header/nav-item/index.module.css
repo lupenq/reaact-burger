@@ -2,9 +2,14 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	composes: p-5 ml-2 from global;
+	composes: p-5 ml-2 text_color_inactive from global;
+	text-decoration: none;
 }
 
 .title {
 	composes: text ml-2 from global;
+}
+
+.activeClassName {
+	color: #ffffff;
 }

@@ -1,0 +1,19 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+}
+
+.navLink {
+  text-decoration: none;
+  height: 64px;
+  composes: text text_type_main-medium text_color_inactive from global;
+}
+
+.activeNavLink {
+  color: #FFFFFF;
+}
+
+.desc {
+  composes: mt-20 text text_type_main-default text_color_inactive from global;
+}

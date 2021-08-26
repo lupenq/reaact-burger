@@ -1,38 +1,24 @@
 import { useEffect } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import AppHeader from '../app-header/app-header'
-import Main from '../main/main'
-import Loader from 'react-loader-spinner'
-import styles from './index.module.css'
-import { useSelector, useDispatch } from 'react-redux'
+import { Router } from '../Router'
+import { useDispatch } from 'react-redux'
 import { getIngridients } from '../../services/slices/ingridients'
+import { loadUserData } from '../../services/slices/user'
 
 function App () {
   const dispatch = useDispatch()
 
-  const {
-    ingridientsRequest,
-    requestError,
-    requestSuccess,
-    items
-  } = useSelector(({ ingridients }) => ingridients)
-
   useEffect(() => {
     dispatch(getIngridients())
+    dispatch(loadUserData())
   }, [dispatch])
 
   return (
-    <>
+    <BrowserRouter>
       <AppHeader />
-      <div className={styles.mainContent}>
-        {
-          ingridientsRequest
-            ? <Loader type={'Oval'} color={'#00BFFF'} />
-            : requestError
-              ? <h1>Error</h1>
-              : requestSuccess && <Main data={items} />
-        }
-      </div>
-    </>
+      <Router />
+    </BrowserRouter>
   )
 }
 

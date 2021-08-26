@@ -8,13 +8,13 @@ const AppHeader = () => {
     <header className={styles.root}>
       <section className={styles.content}>
         <div className={styles.leftSide}>
-          <NavItem title='Конструктор' Icon={BurgerIcon} />
-          <NavItem title='Лента заказов' Icon={ListIcon} />
+          <NavItem to={'/'} title='Конструктор' Icon={BurgerIcon} />
+          <NavItem to={'/feed'} title='Лента заказов' Icon={ListIcon} />
         </div>
         <div className={styles.logo}>
           <Logo />
         </div>
-        <NavItem title='Личный кабинет' Icon={ProfileIcon} className={styles.rightSide} />
+        <NavItem to={'/profile'} title='Личный кабинет' Icon={ProfileIcon} className={styles.rightSide} />
       </section>
     </header>
   )

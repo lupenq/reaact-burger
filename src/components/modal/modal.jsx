@@ -6,12 +6,14 @@ import styles from './index.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 function Modal ({ children, handleClose, title }) {
-  const onKeyDownCloseHandler = e => e.key === 'Escape' && handleClose()
+  const onKeyDownCloseHandler = e => { e.key === 'Escape' && handleClose() }
 
   useEffect(() => {
     document.addEventListener('keydown', onKeyDownCloseHandler)
 
-    return () => document.removeEventListener('keydown', onKeyDownCloseHandler)
+    return () => {
+      document.removeEventListener('keydown', onKeyDownCloseHandler)
+    }
   }, [])
 
   return ReactDOM.createPortal(
