@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  margin-left: 16px;
+}
+
+.ingridient {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  border: solid 2px #4C4CFF;
+  overflow: hidden;
+  margin-left: -16px;
+}
+
+.imageWrapper {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.imageWrapper img {
+  height: 100%;
+  width: auto;
+}
+
+.last {
+  opacity: 0.5;
+}
+
+.restNumber {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

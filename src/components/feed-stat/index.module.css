@@ -1,0 +1,54 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 600px;
+}
+
+.ordersStat {
+	display: flex;
+	gap: 36px;
+	composes: mb-15 from global;
+}
+
+.readyWrap,
+.inWorkWrap {
+	display: flex;
+	flex-direction: column;
+}
+
+.readies,
+.inWorks {
+	column-count: 2;
+	column-gap: 24px;
+	max-lines: 10;
+}
+
+.title {
+	composes: mb-6 text text_type_main-medium from global;
+}
+
+.ready,
+.inWork {
+	composes: text text_type_digits-default from global;
+}
+
+.ready {
+	color: #00CCCC;
+}
+
+.doneAllTimeWrap,
+.doneTodayWrap {
+	display: flex;
+	flex-direction: column;
+
+}
+
+.doneAllTimeWrap {
+	composes: mb-6 from global;
+
+}
+
+.bigNumber {
+		composes: text text_type_digits-large from global;
+}

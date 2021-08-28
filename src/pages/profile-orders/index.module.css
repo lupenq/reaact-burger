@@ -1,0 +1,5 @@
+.root {
+  display: flex;
+  gap: 60px;
+  composes: mt-20 from global;
+}
