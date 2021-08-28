@@ -1,11 +1,12 @@
 import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { wsOpenConnection } from '../../services/slices/feed'
+import { wsOpenConnection, wsClose } from '../../services/slices/feed'
 import { setCurrentOrder } from '../../services/slices/currentOrder'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './index.module.css'
 import { useAppDispatch, useAppSelector } from '../../services/store'
 import { IIngredient } from '../../interfaces'
+import Loader from 'react-loader-spinner'
 
 type IIngredientWithCount = IIngredient & {count: number}
 
@@ -36,13 +37,13 @@ export const FeedItemPage: FC<{isOrderPage: boolean}> = ({ isOrderPage }) => {
       )
     }
 
-    // return () => {
-    //   dispatch(wsClose())
-    // }
+    return () => {
+      dispatch(wsClose())
+    }
   }, [dispatch])
 
   useEffect(() => {
-    if (!currentOrder && orders.length) {
+    if (!currentOrder.ingredients && orders.length) {
       dispatch(setCurrentOrder(orders.find(e => e._id === id)))
     }
   }, [JSON.stringify(orders)])
@@ -83,13 +84,14 @@ export const FeedItemPage: FC<{isOrderPage: boolean}> = ({ isOrderPage }) => {
     }
   }
 
-  const currentCost = currentOrder?.ingredients.reduce((accumulator: number, el: string) => {
+  const currentCost = currentOrder?.ingredients?.reduce((accumulator: number, el: string) => {
     const newPrice = allIngredients.find(item => item._id === el)?.price || 0
     return accumulator + newPrice
   }, 0)
 
   return (
-    currentOrder.ingredients && <main className={styles.root}>
+    currentOrder.ingredients
+      ? <main className={styles.root}>
       <span className={styles.orderNumber}>#{currentOrder.number}</span>
       <span className={styles.title}>{currentOrder.name}</span>
       <span className={styles.status}>{getStatus()}</span>
@@ -125,5 +127,6 @@ export const FeedItemPage: FC<{isOrderPage: boolean}> = ({ isOrderPage }) => {
         </div>
       </div>
     </main>
+      : <Loader type={'Audio'} />
   )
 }
