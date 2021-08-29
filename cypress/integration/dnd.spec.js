@@ -1,6 +1,7 @@
 describe('dnd', function () {
   before(function () {
     cy.visit('http://localhost:3000')
+    cy.wait(4000)
   })
 
   it('dnd work correct', function () {

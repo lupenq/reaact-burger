@@ -100,7 +100,7 @@ export const FeedItemPage: FC<{isOrderPage: boolean}> = ({ isOrderPage }) => {
       <div className={styles.ingredients}>
         {
           ingridientsData.map(ingridient => {
-            return <div className={styles.ingridient}>
+            return <div className={styles.ingridient} key={ingridient._id}>
               <div className={styles.imageWrapper}>
                 <img src={ingridient.image_mobile} alt={ingridient.name} />
               </div>
