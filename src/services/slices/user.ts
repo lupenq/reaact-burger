@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { AppDispatch } from '../store'
+import { BASE_API_URL } from '../../utils/constants'
+import { AppDispatch, AppThunk } from '../store'
 import { getCookie, setCookie, fetchWithRefresh } from '../utils'
 
 interface IUserSliceState {
@@ -165,9 +166,9 @@ export const {
   loadUserError
 } = userSlice.actions
 
-export const postForgotPassword = (email: string) => (dispatch: AppDispatch) => {
+export const postForgotPassword = (email: string): AppThunk => (dispatch: AppDispatch) => {
   dispatch(forgotRequest())
-  fetch('https://norma.nomoreparties.space/api/password-reset', {
+  fetch(`${BASE_API_URL}/password-reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -183,9 +184,9 @@ export const postForgotPassword = (email: string) => (dispatch: AppDispatch) => 
     })
 }
 
-export const postResetPassword = (data: { token: string; password: string }) => (dispatch: AppDispatch) => {
+export const postResetPassword = (data: { token: string; password: string }): AppThunk => (dispatch: AppDispatch) => {
   dispatch(resetRequest())
-  fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
+  fetch(`${BASE_API_URL}/password-reset/reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -201,9 +202,9 @@ export const postResetPassword = (data: { token: string; password: string }) => 
     })
 }
 
-export const loadUserData = () => (dispatch: AppDispatch) => {
+export const loadUserData = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(loadUserRequest())
-  fetchWithRefresh('https://norma.nomoreparties.space/api/auth/user', {
+  fetchWithRefresh(`${BASE_API_URL}/auth/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -219,8 +220,8 @@ export const loadUserData = () => (dispatch: AppDispatch) => {
     })
 }
 
-export const changeUserData = (data: { name: string; email: string }) => (dispatch: AppDispatch) => {
-  fetchWithRefresh('https://norma.nomoreparties.space/api/auth/user', {
+export const changeUserData = (data: { name: string; email: string }): AppThunk => (dispatch: AppDispatch) => {
+  fetchWithRefresh(`${BASE_API_URL}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -236,9 +237,9 @@ export const changeUserData = (data: { name: string; email: string }) => (dispat
     })
 }
 
-export const postRegister = (data: { name: string; email: string; password: string }) => (dispatch: AppDispatch) => {
+export const postRegister = (data: { name: string; email: string; password: string }): AppThunk => (dispatch: AppDispatch) => {
   dispatch(registerRequest())
-  fetch('https://norma.nomoreparties.space/api/auth/register', {
+  fetch(`${BASE_API_URL}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -262,9 +263,9 @@ export const postRegister = (data: { name: string; email: string; password: stri
     })
 }
 
-export const postLogin = (data: { email: string; password: string }) => (dispatch: AppDispatch) => {
+export const postLogin = (data: { email: string; password: string }): AppThunk => (dispatch: AppDispatch) => {
   dispatch(loginRequest())
-  fetch('https://norma.nomoreparties.space/api/auth/login', {
+  fetch(`${BASE_API_URL}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -288,9 +289,9 @@ export const postLogin = (data: { email: string; password: string }) => (dispatc
     })
 }
 
-export const postLogout = () => (dispatch: AppDispatch) => {
+export const postLogout = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(logoutRequest())
-  fetch('https://norma.nomoreparties.space/api/auth/logout', {
+  fetch(`${BASE_API_URL}/auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

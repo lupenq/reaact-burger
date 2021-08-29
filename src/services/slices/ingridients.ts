@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IIngredient } from '../../interfaces'
-import { API_URL } from '../../utils/constants'
-import { AppDispatch } from '../store'
+import { BASE_API_URL } from '../../utils/constants'
+import { AppDispatch, AppThunk } from '../store'
 
 interface IIngredientsSliceState {
   items: IIngredient[]
@@ -35,9 +35,9 @@ export const ingridientsSlice = createSlice({
 
 export const { ingridientsRequest, ingridientsSuccess, ingridientsError } = ingridientsSlice.actions
 
-export const getIngridients = () => (dispatch: AppDispatch) => {
+export const getIngridients = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(ingridientsRequest())
-  fetch(API_URL)
+  fetch(`${BASE_API_URL}/ingredients`)
     .then(res => res.ok ? res.json() : Promise.reject(res))
     .then(({ data }) => {
       dispatch(ingridientsSuccess(data))

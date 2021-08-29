@@ -1,3 +1,5 @@
+import { BASE_API_URL } from '../utils/constants'
+
 export function setCookie (name: string, value: any, props: any) {
   props = props || {}
   let exp = props.expires
@@ -36,7 +38,7 @@ export const getUser = () => {
 const checkResponse = (res: any) => res.ok ? res.json() : res.json().then((e: any) => Promise.reject(e))
 
 export const refreshToken = () => {
-  return fetch('https://norma.nomoreparties.space/api/auth/token', {
+  return fetch(`${BASE_API_URL}/auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'

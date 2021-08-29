@@ -1,5 +1,5 @@
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, FormEvent } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { useHistory } from 'react-router'
 import { postForgotPassword, resetForgotRequest } from '../../services/slices/user'
@@ -16,7 +16,8 @@ export const ForgotPasswordPage: FC = () => {
 
   const history = useHistory()
 
-  const onClick = () => {
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault()
     dispatch(postForgotPassword(email))
   }
 
@@ -45,21 +46,23 @@ export const ForgotPasswordPage: FC = () => {
   return (
     <div className={styles.root}>
       <p className={styles.title}>Восстановление пароля</p>
-      <div className={styles.inputWrapper}>
-        <Input
-          type={'text'}
-          placeholder={'E-mail'}
-          onChange={e => setEmail(e.target.value)}
-          value={email}
-          name={'login'}
-          size={'default'}
-        />
-      </div>
-      <div className={styles.button}>
-        <Button type="primary" size="small" onClick={onClick}>
-          Восстановить
-        </Button>
-      </div>
+      <form onSubmit={onSubmit} className={styles.form}>
+        <div className={styles.inputWrapper}>
+          <Input
+            type={'text'}
+            placeholder={'E-mail'}
+            onChange={e => setEmail(e.target.value)}
+            value={email}
+            name={'login'}
+            size={'default'}
+          />
+        </div>
+        <div className={styles.button}>
+          <Button type="primary" size="small">
+            Восстановить
+          </Button>
+        </div>
+      </form>
       <div className={styles.linkBlock}>
         <p>Вспомнили пароль?</p>
         <Link className={styles.link} to='/login'>Войти</Link>

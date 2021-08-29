@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { clearConstructor, IConstructorSliceState } from './burgerConstructor'
 import { getCookie } from '../utils'
 import { IOrder } from '../../interfaces'
-import { AppDispatch, RootState } from '../store'
+import { AppDispatch, AppThunk, RootState } from '../store'
+import { BASE_API_URL } from '../../utils/constants'
 
 interface orderSliceState {
   orderRequest: boolean,
@@ -44,9 +45,9 @@ const getIngridientsId = (burgerConstructor: IConstructorSliceState) => {
   return [bun._id, bun._id, ...ingridients.map(item => item._id)]
 }
 
-export const postOrder = () => (dispatch: AppDispatch, getState: () => RootState) => {
+export const postOrder = (): AppThunk => (dispatch: AppDispatch, getState: () => RootState) => {
   dispatch(orderRequest())
-  fetch('https://norma.nomoreparties.space/api/orders', {
+  fetch(`${BASE_API_URL}/orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

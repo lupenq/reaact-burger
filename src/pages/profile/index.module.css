@@ -14,3 +14,9 @@
   justify-content: center;
   composes: mt-6 from global;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

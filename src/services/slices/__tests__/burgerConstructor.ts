@@ -85,7 +85,7 @@ describe('burgerConstructorSlice', () => {
     const reduce = reducer(initialState, addIngridient(testIngregient))
     const result = {
       bun: initialState.bun,
-      ingridients: [{ ...testIngregient, addedAt: Date.now() }]
+      ingridients: [{ ...testIngregient, addedAt: reduce.ingridients[0].addedAt }]
     }
     expect(reduce).toEqual(result)
   })

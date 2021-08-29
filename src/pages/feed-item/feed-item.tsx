@@ -7,6 +7,7 @@ import styles from './index.module.css'
 import { useAppDispatch, useAppSelector } from '../../services/store'
 import { IIngredient } from '../../interfaces'
 import Loader from 'react-loader-spinner'
+import { WS_API_URL } from '../../utils/constants'
 
 type IIngredientWithCount = IIngredient & {count: number}
 
@@ -25,14 +26,14 @@ export const FeedItemPage: FC<{isOrderPage: boolean}> = ({ isOrderPage }) => {
     if (isOrderPage) {
       dispatch(
         wsOpenConnection({
-          url: 'wss://norma.nomoreparties.space/orders',
+          url: `${WS_API_URL}/orders`,
           personal: true
         })
       )
     } else {
       dispatch(
         wsOpenConnection({
-          url: 'wss://norma.nomoreparties.space/orders/all'
+          url: `${WS_API_URL}/orders/all`
         })
       )
     }

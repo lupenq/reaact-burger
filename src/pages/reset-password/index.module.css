@@ -27,3 +27,9 @@
   composes: ml-1 text text_type_main-default from global;
   color: rgba(76, 76, 255, 1);
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

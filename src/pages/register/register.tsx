@@ -1,5 +1,5 @@
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, FormEvent } from 'react'
 import { Link, useHistory, Redirect } from 'react-router-dom'
 import { postRegister } from '../../services/slices/user'
 import styles from './index.module.css'
@@ -16,7 +16,8 @@ export const RegisterPage: FC = () => {
   const dispatch = useAppDispatch()
   const { isLoginned } = useAppSelector(store => store.user)
 
-  const onClick = () => {
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault()
     dispatch(postRegister({ name, email, password }))
   }
 
@@ -39,43 +40,45 @@ export const RegisterPage: FC = () => {
   return (
     <div className={styles.root}>
       <p className={styles.title}>Регистрация</p>
-      <div className={styles.inputWrapper}>
-        <Input
-          type={'text'}
-          placeholder={'Имя'}
-          onChange={e => setName(e.target.value)}
-          value={name}
-          name={'name'}
-          size={'default'}
-        />
-      </div>
-      <div className={styles.inputWrapper}>
-        <Input
-          type={'text'}
-          placeholder={'E-mail'}
-          onChange={e => setEmail(e.target.value)}
-          value={email}
-          name={'email'}
-          size={'default'}
-        />
-      </div>
-      <div className={styles.inputWrapper}>
-        <Input
-          type={passwordVisible ? 'text' : 'password'}
-          placeholder={'Пароль'}
-          onChange={e => setPassword(e.target.value)}
-          value={password}
-          name={'password'}
-          onIconClick={() => setPasswordVisible(!passwordVisible)}
-          icon={passwordVisible ? 'HideIcon' : 'ShowIcon'}
-          size={'default'}
-        />
-      </div>
-      <div className={styles.button}>
-        <Button type="primary" size="small" onClick={onClick}>
-          Зарегистрироваться
-        </Button>
-      </div>
+      <form onSubmit={onSubmit} className={styles.form}>
+        <div className={styles.inputWrapper}>
+          <Input
+            type={'text'}
+            placeholder={'Имя'}
+            onChange={e => setName(e.target.value)}
+            value={name}
+            name={'name'}
+            size={'default'}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <Input
+            type={'text'}
+            placeholder={'E-mail'}
+            onChange={e => setEmail(e.target.value)}
+            value={email}
+            name={'email'}
+            size={'default'}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <Input
+            type={passwordVisible ? 'text' : 'password'}
+            placeholder={'Пароль'}
+            onChange={e => setPassword(e.target.value)}
+            value={password}
+            name={'password'}
+            onIconClick={() => setPasswordVisible(!passwordVisible)}
+            icon={passwordVisible ? 'HideIcon' : 'ShowIcon'}
+            size={'default'}
+          />
+        </div>
+        <div className={styles.button}>
+          <Button type="primary" size="small">
+            Зарегистрироваться
+          </Button>
+        </div>
+      </form>
       <div className={styles.linkBlock}>
         <p>Уже зарегистрированы?</p>
         <Link className={styles.link} to='/login'>Войти</Link>
