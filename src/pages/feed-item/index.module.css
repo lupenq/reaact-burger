@@ -1,0 +1,100 @@
+.root {
+  width: 640px;
+  display: flex;
+  flex-direction: column;
+  composes: mt-10 mb-10 from global;
+}
+
+.orderNumber {
+  width: 100%;
+  text-align: center;
+  composes: mb-10 text text_type_digits-default from global;
+}
+
+.title {
+  composes: mb-3 text text_type_main-medium from global;
+}
+
+.compos {
+  composes: mb-6 text text_type_main-medium from global;
+}
+
+.status {
+  composes: mb-15 text text_type_main-small from global;
+  color: #00CCCC;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date {
+  composes: text text_type_main-default text_color_inactive from global;
+}
+
+.totalPriceWrap {
+  display: flex;
+  align-items: center;
+}
+
+.totalPrice {
+  composes: mr-2 text text_type_digits-default from global;
+}
+
+.ingredients {
+  composes: mb-10 pr-6 from global;
+  max-height: 312px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: scroll;
+  box-sizing: border-box;
+}
+
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+.ingredients::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.ingridient {
+  display: flex;
+  align-items: center;
+}
+
+.imageWrapper {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  border: solid 2px #4C4CFF;
+  border-radius: 100%;
+}
+
+.imageWrapper img {
+  height: 100%;
+  width: auto;
+}
+
+.ingredientName {
+  composes: ml-4 text text_type_main-default  from global;
+  display: flex;
+  flex-grow: 1;
+}
+
+.ingredientPriceWrap {
+  display: flex;
+  align-items: center;
+}
+
+.price {
+  composes: mr-2 text text_type_digits-default from global;
+}

@@ -1,0 +1,27 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 600px;
+}
+
+.list {
+	height: 756px;
+	width: 100%;
+	composes: pl-4 pr-4 from global;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	overflow-y: scroll;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+.list::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
